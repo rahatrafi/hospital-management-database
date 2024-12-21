@@ -1,0 +1,63 @@
+-- Table creation queries
+CREATE TABLE Departments (
+    DepartmentID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Location VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Doctors (
+    DoctorID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Specialization VARCHAR(100) NOT NULL,
+    Phone VARCHAR(15) NOT NULL,
+    DepartmentID INT,
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+);
+
+CREATE TABLE Patients (
+    PatientID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Age INT NOT NULL,
+    Gender VARCHAR(10) NOT NULL,
+    Phone VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE Appointments (
+    AppointmentID INT AUTO_INCREMENT PRIMARY KEY,
+    Date DATE NOT NULL,
+    Time TIME NOT NULL,
+    Status VARCHAR(50) NOT NULL,
+    DoctorID INT,
+    PatientID INT,
+    FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID),
+    FOREIGN KEY (PatientID) REFERENCES Patients(PatientID)
+);
+
+-- Dummy data insertion queries
+INSERT INTO Departments (Name, Location) VALUES 
+('Cardiology', 'Building A'),
+('Neurology', 'Building B'),
+('Pediatrics', 'Building C'),
+('Orthopedics', 'Building D'),
+('Oncology', 'Building E');
+
+INSERT INTO Doctors (Name, Specialization, Phone, DepartmentID) VALUES 
+('Dr. Smith', 'Cardiologist', '1234567890', 1),
+('Dr. John', 'Neurologist', '1234567891', 2),
+('Dr. Alice', 'Pediatrician', '1234567892', 3),
+('Dr. Emily', 'Orthopedist', '1234567893', 4),
+('Dr. Robert', 'Oncologist', '1234567894', 5);
+
+INSERT INTO Patients (Name, Age, Gender, Phone) VALUES 
+('Alice', 30, 'Female', '2233445566'),
+('Bob', 45, 'Male', '3344556677'),
+('Charlie', 25, 'Male', '4455667788'),
+('Diana', 50, 'Female', '5566778899'),
+('Eve', 35, 'Female', '6677889900');
+
+INSERT INTO Appointments (Date, Time, Status, DoctorID, PatientID) VALUES 
+('2024-12-22', '10:00:00', 'Scheduled', 1, 1),
+('2024-12-22', '11:00:00', 'Scheduled', 2, 2),
+('2024-12-23', '09:00:00', 'Completed', 3, 3),
+('2024-12-23', '14:00:00', 'Canceled', 4, 4),
+('2024-12-24', '16:00:00', 'Scheduled', 5, 5);
